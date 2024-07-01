@@ -48,13 +48,6 @@
       "paint": {"background-color": "rgba(253, 249, 247, 1)"}
     },
     {
-      "id": "ocean",
-      "type": "fill",
-      "source": "longdo",
-      "source-layer": "ocean",
-      "paint": {"fill-color": "rgba(166, 207, 255, 1)"}
-    },
-    {
       "id": "area_plant",
       "type": "fill",
       "source": "longdo",
@@ -189,33 +182,6 @@
       "paint": {"raster-saturation": -1, "raster-opacity": 0.13}
     },
     {
-      "id": "admin_national",
-      "type": "line",
-      "source": "longdo",
-      "source-layer": "admin",
-      "minzoom": 1,
-      "filter": ["==", "level", 2],
-      "paint": {
-        "line-color": "rgba(170, 170, 170, 1)",
-        "line-width": {"stops": [[3, 1], [4, 2]]}
-      }
-    },
-    {
-      "id": "admin_subnational",
-      "type": "line",
-      "source": "longdo",
-      "source-layer": "admin",
-      "minzoom": 3,
-      "filter": [">", "level", 2],
-      "paint": {
-        "line-color": {
-          "stops": [[5, "#CCCCCC"], [6, "#BBBBBB"], [9, "rgba(88, 88, 88, 1)"]]
-        },
-        "line-dasharray": {"stops": [[7, [1]], [8, [6, 6]]]},
-        "line-width": {"stops": [[3, 0.1], [5, 1]]}
-      }
-    },
-    {
       "id": "water_ditch",
       "type": "line",
       "source": "longdo",
@@ -228,22 +194,6 @@
         "line-width": {
           "base": 2,
           "stops": [[14, 1], [16, 2], [17, 6], [24, 832]]
-        }
-      }
-    },
-    {
-      "id": "water_canal",
-      "type": "line",
-      "source": "longdo",
-      "source-layer": "waterway",
-      "minzoom": 12,
-      "filter": ["in", "type", "nu:river", "nu:stream", "river", "canal"],
-      "layout": {"line-cap": "round", "line-join": "round"},
-      "paint": {
-        "line-color": "#93C4FF",
-        "line-width": {
-          "base": 2,
-          "stops": [[13, 1], [16, 4], [17, 13], [24, 1664]]
         }
       }
     },
@@ -264,6 +214,50 @@
         "dock"
       ],
       "paint": {"fill-color": "rgba(166, 207, 255, 1)"}
+    },
+    {
+      "id": "water_canal",
+      "type": "line",
+      "source": "longdo",
+      "source-layer": "waterway",
+      "minzoom": 12,
+      "filter": ["in", "type", "nu:river", "nu:stream", "river", "canal"],
+      "layout": {"line-cap": "round", "line-join": "round"},
+      "paint": {
+        "line-color": "rgba(155, 198, 249, 0.85)",
+        "line-width": {
+          "base": 2,
+          "stops": [[13, 1], [16, 4], [17, 13], [24, 1664]]
+        }
+      }
+    },
+    {
+      "id": "admin_national",
+      "type": "line",
+      "source": "longdo",
+      "source-layer": "admin",
+      "minzoom": 1,
+      "filter": ["==", "level", 2],
+      "paint": {
+        "line-color": "rgba(0, 119, 22, 1)",
+        "line-width": {"stops": [[3, 1], [4, 2]]},
+        "line-opacity": 0.75
+      }
+    },
+    {
+      "id": "admin_subnational",
+      "type": "line",
+      "source": "longdo",
+      "source-layer": "admin",
+      "minzoom": 3,
+      "filter": [">", "level", 2],
+      "paint": {
+        "line-color": {
+          "stops": [[5, "#CCCCCC"], [6, "#BBBBBB"], [9, "rgba(88, 88, 88, 1)"]]
+        },
+        "line-dasharray": {"stops": [[7, [1]], [8, [6, 6]]]},
+        "line-width": {"stops": [[3, 0.1], [5, 1]]}
+      }
     },
     {
       "id": "road_construction",
@@ -695,14 +689,23 @@
       "type": "line",
       "source": "longdo",
       "source-layer": "rail",
-      "minzoom": 11,
+      "minzoom": 14,
       "filter": ["in", "type", "nu:rail", "nu:subway", "rail", "subway"],
       "paint": {
-        "line-color": "rgba(0, 100, 21, 1)",
-        "line-width": {
-          "base": 2,
-          "stops": [[11, 3], [15, 6], [19, 8], [24, 240]]
-        },
+        "line-color": "rgba(150, 150, 150, 1)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 2],
+          ["zoom"],
+          11,
+          1.5,
+          15,
+          3,
+          19,
+          4,
+          24,
+          120
+        ],
         "line-opacity": ["case", ["get", "tunnel"], 0.7, 1]
       }
     },
@@ -711,14 +714,23 @@
       "type": "line",
       "source": "longdo",
       "source-layer": "rail",
-      "minzoom": 11,
+      "minzoom": 14,
       "filter": ["in", "type", "nu:rail", "nu:subway", "rail", "subway"],
       "paint": {
-        "line-color": "#FFFFFF",
-        "line-width": {
-          "base": 2,
-          "stops": [[11, 2], [15, 5], [19, 7], [24, 239]]
-        },
+        "line-color": "rgba(255, 255, 255, 1)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 2],
+          ["zoom"],
+          11,
+          1.5,
+          15,
+          3,
+          19,
+          4,
+          24,
+          120
+        ],
         "line-dasharray": [4, 4]
       }
     },
@@ -736,12 +748,12 @@
         "motorway_link",
         "raceway"
       ],
-      "layout": {"line-cap": "round", "line-join": "round"},
+      "layout": {"line-cap": "square", "line-join": "miter"},
       "paint": {
         "line-color": {
           "stops": [
-            [13, "rgba(218, 218, 218, 1)"],
-            [15, "rgba(127, 127, 127, 1)"]
+            [13, "rgba(249, 140, 91, 1)"],
+            [15, "rgba(244, 139, 90, 1)"]
           ]
         },
         "line-width": {
@@ -814,8 +826,7 @@
           16,
           ["coalesce", ["get", "height"], 10]
         ],
-        "fill-extrusion-opacity": 0.6,
-        "fill-extrusion-color": "rgba(175, 175, 175, 1)",
+        "fill-extrusion-color": "rgba(181, 181, 181, 1)",
         "fill-extrusion-base": [
           "interpolate",
           ["linear"],
@@ -824,7 +835,8 @@
           0,
           16,
           ["get", "min_height"]
-        ]
+        ],
+        "fill-extrusion-opacity": 0.65
       }
     },
     {
@@ -834,9 +846,9 @@
       "source-layer": "building_ms",
       "minzoom": 15,
       "paint": {
-        "fill-color": "rgba(239, 239, 239, 1)",
-        "fill-opacity": 0.5,
-        "fill-outline-color": "rgba(218, 218, 218, 1)"
+        "fill-color": "rgba(166, 166, 166, 1)",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "rgba(181, 181, 181, 1)"
       }
     },
     {
@@ -971,7 +983,7 @@
       },
       "paint": {
         "text-color": {
-          "stops": [[17, "rgba(12, 92, 174, 1)"], [18, "rgba(6, 67, 129, 1)"]]
+          "stops": [[17, "rgba(14, 81, 152, 1)"], [18, "rgba(6, 67, 129, 1)"]]
         },
         "text-halo-color": "rgba(255, 255, 255, 1)",
         "text-halo-width": 1,
@@ -1062,6 +1074,13 @@
         "text-color": {"stops": [[15, "#555555"], [16, "#777777"]]},
         "text-opacity": 0.97
       }
+    },
+    {
+      "id": "ocean",
+      "type": "fill",
+      "source": "longdo",
+      "source-layer": "ocean",
+      "paint": {"fill-color": "rgba(166, 207, 255, 1)"}
     },
     {
       "id": "label_road_name_1",
@@ -1240,8 +1259,8 @@
           "property": "level",
           "type": "exponential",
           "stops": [
-            [{"value": 4, "zoom": 8}, "rgba(51, 51, 53, 1)"],
-            [{"value": 4, "zoom": 9}, "rgba(44, 44, 45, 1)"]
+            [{"value": 4, "zoom": 8}, "rgba(67, 67, 67, 1)"],
+            [{"value": 4, "zoom": 9}, "rgba(92, 92, 92, 1)"]
           ]
         },
         "text-halo-color": "rgba(255, 255, 255, 1)",
